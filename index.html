@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f3d2b">
+  <title>（仮）日光 渋滞ラジオ</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="safety-bar" role="note">運転中の方は操作しないでください</div>
+
+  <!-- 最初の画面 -->
+  <section id="screen-welcome" class="screen" hidden>
+    <h1 class="service-name"></h1>
+    <p class="lead">渋滞の時間を、日光を好きになる時間に。<br>地元の人が、日光の話をお届けします。</p>
+    <div class="notice-box">
+      <p class="notice-big">同乗者の方が<br>操作してください</p>
+      <p>運転中の方は、聞くだけでお楽しみください。</p>
+    </div>
+    <button id="btn-geo" class="btn btn-primary btn-xl">📍 今いる場所で始める</button>
+    <p class="hint">位置情報は、近くの話を上に並べるためだけに使います。</p>
+    <p class="sub-heading">または、場所を選んで始める</p>
+    <div id="welcome-places" class="place-buttons"></div>
+  </section>
+
+  <!-- メイン画面 -->
+  <section id="screen-main" class="screen" hidden>
+    <header class="main-header">
+      <span class="service-name small"></span>
+      <button id="btn-finish" class="btn btn-ghost">おわる</button>
+    </header>
+
+    <div id="tab-listen" class="tab-panel" role="tabpanel">
+      <div class="place-row">
+        <span>今いる場所：</span>
+        <div id="listen-places" class="place-chips"></div>
+      </div>
+      <button id="btn-play-all" class="btn btn-primary btn-xl">▶ 上から続けて聞く</button>
+      <ol id="story-list" class="story-list"></ol>
+    </div>
+
+    <div id="tab-next" class="tab-panel" role="tabpanel" hidden>
+      <h2>次に来るなら</h2>
+      <p class="hint">地元の人がすすめる、混まない時期・時間・場所です。</p>
+      <div id="rec-list" class="card-list"></div>
+      <p class="rule-link"><a href="rules.html">おすすめの掲載ルール</a></p>
+    </div>
+
+    <div id="tab-tips" class="tab-panel" role="tabpanel" hidden>
+      <h2>渋滞にハマらないコツ</h2>
+      <p class="hint">次回の参考にしてください。同乗者の方がご覧ください。</p>
+      <div id="tips-list" class="card-list"></div>
+    </div>
+
+    <!-- 1本聞き終わるたびに出す「次に来るなら」 -->
+    <div id="next-popup" class="next-popup" hidden>
+      <div class="next-popup-head">
+        <p class="next-popup-label">次に来るなら…</p>
+        <button id="btn-popup-close" class="btn-close" aria-label="とじる">×</button>
+      </div>
+      <div id="next-popup-body"></div>
+    </div>
+
+    <!-- 再生バー -->
+    <div id="player" class="player">
+      <div class="player-info">
+        <span id="player-title">話を選んでください</span>
+        <span id="player-mode" class="player-mode"></span>
+      </div>
+      <div class="player-controls">
+        <button id="btn-vol-down" class="btn btn-round" aria-label="音量を下げる">🔉</button>
+        <button id="btn-toggle" class="btn btn-round btn-big" aria-label="再生／一時停止">▶</button>
+        <button id="btn-skip" class="btn btn-round" aria-label="次の話へ">⏭</button>
+        <button id="btn-vol-up" class="btn btn-round" aria-label="音量を上げる">🔊</button>
+      </div>
+      <div id="player-vol" class="player-vol"></div>
+    </div>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="listen" role="tab">🎧<br>聞く</button>
+      <button class="tab" data-tab="next" role="tab">🗓<br>次に来るなら</button>
+      <button class="tab" data-tab="tips" role="tab">🚗<br>渋滞のコツ</button>
+    </nav>
+  </section>
+
+  <!-- 最後の画面 -->
+  <section id="screen-thanks" class="screen" hidden>
+    <h1>聞いてくれて<br>ありがとうございました</h1>
+    <p class="lead">30秒で終わるアンケートにご協力ください。</p>
+    <form id="survey" class="survey">
+      <fieldset>
+        <legend>① 渋滞のイライラは減りましたか？</legend>
+        <div class="choice-row" data-q="q1"></div>
+      </fieldset>
+      <fieldset>
+        <legend>② また日光に来たいですか？</legend>
+        <div class="choice-row" data-q="q2"></div>
+      </fieldset>
+      <fieldset>
+        <legend>③ 次は平日や朝に来たいですか？</legend>
+        <div class="choice-row" data-q="q3"></div>
+      </fieldset>
+      <button type="submit" class="btn btn-primary btn-xl">送信する</button>
+      <p id="survey-done" class="done-msg" hidden>ありがとうございました！</p>
+    </form>
+
+    <div class="follow-box">
+      <h2>日光の「混まない情報」を受け取る</h2>
+      <a id="btn-line-add" class="btn btn-line btn-xl" href="#">LINEで友だちになる</a>
+      <div class="email-box">
+        <label class="consent">
+          <input type="checkbox" id="email-consent">
+          <span><a href="privacy.html">プライバシーポリシー</a>に同意して、メールで受け取る（任意）</span>
+        </label>
+        <a id="btn-email" class="btn btn-secondary btn-xl disabled" href="#" aria-disabled="true">メールを登録する</a>
+      </div>
+    </div>
+    <button id="btn-back" class="btn btn-ghost">話の一覧にもどる</button>
+  </section>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
