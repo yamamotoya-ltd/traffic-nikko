@@ -17,7 +17,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const contentPath = join(root, 'data', 'content.json');
+const contentPath = join(root, 'public', 'data', 'content.json');
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const force = args.includes('--force');
@@ -65,7 +65,7 @@ let totalChars = 0;
 const todo = [];
 for (const s of targets) {
   const out = `audio/${s.id}.mp3`;
-  const already = await exists(join(root, out));
+  const already = await exists(join(root, 'public', out));
   if (already && !force) { console.log(`とばす（作成済み）: ${s.id}`); continue; }
   totalChars += s.script.length;
   todo.push({ s, out, voice: speakers[s.speakerId]?.ttsVoice || defaultVoice });
@@ -78,11 +78,11 @@ if (dryRun) { console.log('（確認のみ。音声は作っていません）')
 if (!todo.length) process.exit(0);
 if (!apiKey) { console.error('GOOGLE_TTS_API_KEY が設定されていません。README の手順を見てください。'); process.exit(1); }
 
-await mkdir(join(root, 'audio'), { recursive: true });
+await mkdir(join(root, 'public', 'audio'), { recursive: true });
 for (const { s, out, voice } of todo) {
   const buffers = [];
   for (const part of splitForApi(s.script)) buffers.push(await synthesize(part, voice));
-  await writeFile(join(root, out), Buffer.concat(buffers));
+  await writeFile(join(root, 'public', out), Buffer.concat(buffers));
   s.audio = out;
   console.log(`できた: ${out}`);
 }

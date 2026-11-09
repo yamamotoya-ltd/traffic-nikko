@@ -1,0 +1,9 @@
+// Cloudflare に公開するための設定。public/ フォルダの中身だけを公開する。
+{
+  "name": "traffic-nikko",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}

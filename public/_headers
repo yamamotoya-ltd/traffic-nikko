@@ -1,0 +1,9 @@
+# 試作版のあいだは、検索エンジンに載せない
+/*
+  X-Robots-Tag: noindex, nofollow
+
+# 更新がすぐ届くよう、保存の仕組みのファイルは毎回確認させる
+/sw.js
+  Cache-Control: no-cache
+/data/content.json
+  Cache-Control: no-cache

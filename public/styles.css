@@ -25,6 +25,14 @@ html, body {
 
 a { color: var(--green); }
 
+.proto-bar {
+  background: #f3e3a6;
+  color: #4a3b00;
+  text-align: center;
+  font-size: 13px;
+  padding: 3px 8px;
+}
+
 .safety-bar {
   position: sticky;
   top: 0;

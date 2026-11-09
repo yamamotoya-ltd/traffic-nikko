@@ -1,7 +1,7 @@
 /* 電波が弱い山道でも止まらないよう、画面のファイルと音声をスマホに保存しておく */
-const SHELL = 'nikko-shell-v1';
+const SHELL = 'nikko-shell-v2';
 const AUDIO = 'nikko-audio-v1';
-const FILES = ['./', 'index.html', 'styles.css', 'app.js', 'data/content.json', 'manifest.webmanifest', 'rules.html', 'privacy.html'];
+const FILES = ['./', 'index.html', 'styles.css', 'app.js', 'data/content.json', 'manifest.webmanifest', 'rules.html', 'privacy.html', 'icon.svg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(SHELL).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
